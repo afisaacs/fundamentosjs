@@ -6,18 +6,22 @@ var aaron = {
 
 console.log(`Al inicio del año ${aaron.nombre} pesaba ${aaron.peso}Kg`)
 
-const INCREMENTO_DE_PESO = 0.2
-const DIAS_DEL_AGNO = 365
-const aumentarDePeso = persona => persona.peso += INCREMENTO_DE_PESO
-const disminuirPeso = persona => persona.peso -= INCREMENTO_DE_PESO
+const FACTOR_DE__CAMBIO_PESO = 0.3, DIAS_DEL_AGNO = 365, META = aaron.peso - 3;
+var dias = 0;
 
-for (var i = 0; i < DIAS_DEL_AGNO; i++) {
-  var random = Math.random()
-  if(random < 0.25){
+const aumentarDePeso = persona => persona.peso += FACTOR_DE__CAMBIO_PESO
+const disminuirDePeso = persona => persona.peso -= FACTOR_DE__CAMBIO_PESO
+const comeMucho = () => Math.random() < 0.3
+const realizaDeporte = () => Math.random() < 0.4
+
+while (aaron.peso > META) {
+  if(comeMucho()){
     aumentarDePeso(aaron)
-  } else if(random < 0.5) {
-    disminuirPeso(aaron)
-  } 
+  }
+  if(realizaDeporte()) {
+    disminuirDePeso(aaron)
+  }
+  dias++;
 }
 
-console.log(`Al final del año ${aaron.nombre} pesaba ${aaron.peso.toFixed(1)}Kg`)
+console.log(`Pasarion ${dias} hasta que ${aaron.nombre} adelgazó 3Kg, nuevo peso: ${aaron.peso.toFixed(1)}`)
