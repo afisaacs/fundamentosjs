@@ -1,27 +1,41 @@
 var aaron = {
   nombre: 'Aaron',
   apellido: 'Isaacs',
-  edad: 28,
-};
-
-var dario = {
-  nombre: 'Dario',
-  apellido: 'Sunsnisky',
-  edad: 27,
+  edad: 24,
+  ingeniero: true,
+  cocinero: false,
+  cantante: false,
+  guitarrista: true,
+  drone: true,
 }
 
-imprimirNombreEnMayuscula(aaron);
-imprimirNombreEnMayuscula(dario);
-imprimirNombreEnMayuscula({ nombre: 'Pepito' });
+imprimirProfesiones(aaron);
 
-function imprimirNombreEnMayuscula(persona) {
-  var { nombre } = persona;
-  console.log(nombre.toUpperCase());
+function imprimirProfesiones(persona) {
+  console.log(`${persona.nombre} es:`);
+  if(persona.ingeniero) {
+    console.log('Ingeniero');
+  }
+  if(persona.cocinero) {
+    console.log('Cocinero');
+  }
+  if(persona.cantante) {
+    console.log('Cantante');
+  }
+  if(persona.guitarrista) {
+    console.log('Guitarrista');
+  }
+  if(persona.drone) {
+    console.log('Piloto de drone');
+  }
 }
 
-function cumpleanos(persona) {
-  return {
-    ...persona,
-    edad: persona.edad + 1,
+function imprimirSiEsMayorDeEdad(persona) {
+  //Aaron es mayor de edad Sacha es menor de edad
+  var {nombre, edad} = persona;
+  if(edad < 18) {
+    console.log(`${nombre} es menor de edad, (edad: ${edad})`);
+  } else {
+    console.log(`${nombre} es mayor de edad, (edad: ${edad})`);
   }
 }
