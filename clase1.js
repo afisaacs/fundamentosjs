@@ -35,11 +35,15 @@ var paula = {
 }
 
 const esAlta = ({ altura }) => altura > 1.8
-const esBaja = persona => !esAlta(persona)
+const pasarAlturaACms = persona => ({
+  ...persona,
+  altura: persona.altura*100
+})
 
 var personas = [sacha, alan, martin, dario, vicky, paula]
-var personasAltas = personas.filter(esAlta)
-var personasBajas = personas.filter(esBaja)
 
-console.log(personasAltas)
-console.log(personasBajas);
+var personasAltas = personas.filter(esAlta)
+var personasCms = personas.map(pasarAlturaACms)
+
+console.table(personas)
+console.table(personasCms)
