@@ -5,8 +5,11 @@ class Persona {
     this.altura = altura
   }
 
-  saludar() {
+  saludar(fn) {
     console.log(`Hola, me llamo ${this.nombre} ${this.apellido}`)
+    if (fn) {
+      fn(this.nombre, this.apellido)
+    }
   }
 
   soyAlto(){
@@ -14,19 +17,36 @@ class Persona {
   }
 }
 
-
 class Desarrollador extends Persona{
   constructor(nombre, apellido, altura) {
     super(nombre, apellido, altura)
   }
 
-  saludar() {
+  saludar(fn) {
     console.log(`Hola, me llamo ${this.nombre} ${this.apellido} y soy desarrollador`)
+    if (fn) {
+      fn(this.nombre, this.apellido, true)
+    }
   }
+}
+
+function responderSaludo(nombre, apellido, esDev) {
+  console.log(`Buen día ${nombre} ${apellido}`);
+  if(esDev) {
+    console.log('Ah mirá, no sabía que eras dev');
+    
+  }
+  
 }
 
 var aaron = new Persona('Aaron', 'Isaacs', 1.65)
 var kathe = new Desarrollador('Katherine', 'Benitez', 1.70)
+var arturo = new Desarrollador('Arturo', 'Zapata', 1.80)
+
+aaron.saludar()
+kathe.saludar(responderSaludo)
+arturo.saludar(responderSaludo)
+
 // var sacha = new Persona('Sacha', 'Lifzyc', 1.95)
 
 // aaron.saludar()
