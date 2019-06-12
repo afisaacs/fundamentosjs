@@ -9,15 +9,10 @@ const obtenerPersoaje = (id) => {
   })
 }
 
-const mostrarPersonajes = (inicio, fin) => {
-  obtenerPersoaje(inicio)
-  .then(({ name }) => {
-    console.log(`El personaje ${inicio} es ${name}`)
-    if (inicio < fin) {
-      mostrarPersonajes(inicio+1, fin)
-    }
-  })
-  .catch(id => console.log(`Sucedió un error al obtener el personaje  ${id}`))
-}
+let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+let promesas = ids.map(id => obtenerPersoaje(id))
 
-mostrarPersonajes(1, 30)
+Promise
+.all(promesas)
+.then(personajes => personajes.forEach( (personaje, index) => console.log(`Hola, soy el personaje ${index} y mi nombre es ${personaje.name}`) ))
+.catch(error => console.log(error))
