@@ -9,10 +9,15 @@ const obtenerPersoaje = (id) => {
   })
 }
 
-let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-let promesas = ids.map(id => obtenerPersoaje(id))
+const obtenerPersonajes = async () => {
+  let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,]
+  let promesas = ids.map(id => obtenerPersoaje(id))
+  try {
+    var personajes = await Promise.all(promesas)
+    console.log(personajes)
+  } catch (id) {
+    console.log(id)
+  }
+};
 
-Promise
-.all(promesas)
-.then(personajes => personajes.forEach( (personaje, index) => console.log(`Hola, soy el personaje ${index} y mi nombre es ${personaje.name}`) ))
-.catch(error => console.log(error))
+obtenerPersonajes()
