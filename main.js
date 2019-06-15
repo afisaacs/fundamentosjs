@@ -18,7 +18,7 @@ const startGame = ({ target }) => {
     }
 
     init() {
-      btnStart.classList.add('hide')
+      btnStart.parentElement.classList.add('hide')
       this.level = 7
       this.colors = {indigo, purple, amber, lime}
     }
@@ -27,6 +27,7 @@ const startGame = ({ target }) => {
     }
     nextLevel() {
       this.iluminateSecuency()
+      this.addClickEvent()
     }
     async iluminateSecuency() {
       for (let index = 0; index < this.level; index++) {
@@ -55,6 +56,13 @@ const startGame = ({ target }) => {
     }
     delay(number) {
       return new Promise(resolve => setTimeout(() => resolve(), number))
+    }
+    addClickEvent() {
+      Object.keys(this.colors).forEach(color => this.colors[color].addEventListener('click', event => this.chooseColor(event)))
+    }
+    chooseColor({ target }) { 
+      console.log(target)
+      console.log(this)
     }
   }
 

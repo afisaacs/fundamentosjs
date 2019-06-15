@@ -81,7 +81,7 @@ body {
   color: #fff;
 }
 
-.btn::after {
+/* .btn::after {
   content: "";
   background: #b0bec5;
   display: block;
@@ -99,7 +99,7 @@ body {
   transition: 0s;
   padding: 0;
   margin: 0;
-}
+} */
 
 .hide {
   display: none;
