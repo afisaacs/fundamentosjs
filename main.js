@@ -78,14 +78,26 @@ const startGame = ({ target }) => {
           this.level++
           this.removeClickEvent()
           if (this.level === (ULTIMO_LEVEL+1)) {
-            // enGame()
+            this.winGame()
+            showBtnStart()
           } else {
             setTimeout(() => this.nextLevel(), 1000)
           }
         }
       } else {
-        // loseGame()
+        this.loseGame()
+        showBtnStart()
       }
+    }
+    winGame() {
+      swal('YOU WIN!', 'Congratulations for winning this game', 'success')
+    }
+    loseGame() {
+      swal('YOU LOSE!', 'Try again, practice makes perfect', 'error')
+      .then(() => this.removeClickEvent())
+    }
+    showBtnStart() {
+      btnStart.parentElement.classList.remove('hide')
     }
   }
 
