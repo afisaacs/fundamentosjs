@@ -1,33 +1,35 @@
 const winLoad = () => {
   btnStart = document.getElementById('btnstart')
-  btnStart.addEventListener('click', startGame)
+  btnStart.addEventListener('click', event => setTimeout(startGame(event), 200))
 }
 
 const startGame = ({ target }) => {
-  let btnStart = target
-  let indigo = document.querySelector('.indigo')
-  let purple = document.querySelector('.purple')
-  let amber = document.querySelector('.amber')
-  let lime = document.querySelector('.lime')
+  const btnStart = target
+  const indigo = document.querySelector('.indigo')
+  const purple = document.querySelector('.purple')
+  const amber = document.querySelector('.amber')
+  const lime = document.querySelector('.lime')
+  const ULTIMO_LEVEL = 10
 
   class Game {
     constructor () {
       this.init()
       this.generateSecuence()
-      this.nextLevel()
+      setTimeout(() => this.nextLevel(), 1000)
     }
 
     init() {
       btnStart.parentElement.classList.add('hide')
-      this.level = 7
+      this.level = 1
       this.colors = {indigo, purple, amber, lime}
+      this.chooseColor = this.chooseColor.bind(this)
     }
     generateSecuence() {
-      this.secuence = new Array(10).fill(0).map(() => Math.floor(Math.random()*4))
+      this.secuence = new Array(ULTIMO_LEVEL).fill(0).map(() => Math.floor(Math.random()*4))
     }
     nextLevel() {
+      this.sublevel = 0
       this.iluminateSecuency()
-      this.addClickEvent()
     }
     async iluminateSecuency() {
       for (let index = 0; index < this.level; index++) {
@@ -35,15 +37,15 @@ const startGame = ({ target }) => {
         await this.iluminateColor(color)
         await this.delay(300)
       }
+      await this.addClickEvent()
     }
     numberToColor(number) {
-      const mapNumberColor = {
-        0: this.colors.indigo,
-        1: this.colors.purple,
-        2: this.colors.amber,
-        3: this.colors.lime
-      }
+      const mapNumberColor = {0: this.colors.indigo, 1: this.colors.purple, 2: this.colors.amber, 3: this.colors.lime}
       return mapNumberColor[number]
+    }
+    colorToNumber(color) {
+      const mapColorNumber = {indigo: 0, purple: 1, amber: 2, lime: 3}
+      return mapColorNumber[color]
     }
     iluminateColor(color) {
       return new Promise(resolve => {
@@ -58,11 +60,32 @@ const startGame = ({ target }) => {
       return new Promise(resolve => setTimeout(() => resolve(), number))
     }
     addClickEvent() {
-      Object.keys(this.colors).forEach(color => this.colors[color].addEventListener('click', event => this.chooseColor(event)))
+      return new Promise(resolve => {
+        Object.keys(this.colors).forEach(color => this.colors[color].addEventListener('click', this.chooseColor))
+        resolve()
+      })
+    }
+    removeClickEvent() {
+      Object.keys(this.colors).forEach(color => this.colors[color].removeEventListener('click', this.chooseColor))
     }
     chooseColor({ target }) { 
-      console.log(target)
-      console.log(this)
+      const { color } = target.dataset
+      const colorNumber = this.colorToNumber(color)
+      this.iluminateColor(target)
+      if (colorNumber === this.secuence[this.sublevel]) {
+        this.sublevel++
+        if (this.sublevel === this.level) {
+          this.level++
+          this.removeClickEvent()
+          if (this.level === (ULTIMO_LEVEL+1)) {
+            // enGame()
+          } else {
+            setTimeout(() => this.nextLevel(), 1000)
+          }
+        }
+      } else {
+        // loseGame()
+      }
     }
   }
 
